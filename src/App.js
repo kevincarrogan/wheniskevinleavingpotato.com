@@ -6,7 +6,9 @@ class App extends Component {
     return (
       <main>
         <h1>When is Kevin leaving Potato?</h1>
-        <div className="timer">In 14 days, 4 hours, 13 minutes and 22 seconds.</div>
+        <div className="countdown-timer">
+          336:13:22.000
+        </div>
         <div className="logo">
           <svg className="potato-logo" role="presentation" width="186" height="180" viewBox="0 0 62 60" xmlns="http://www.w3.org/2000/svg">
             <g fill="none" fillRule="evenodd">
