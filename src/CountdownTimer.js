@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ReactAnimationFrame from 'react-animation-frame';
 import { DateTime } from 'luxon';
 
+import FixedWidthText from './FixedWidthText';
+
 class CountdownTimer extends Component {
   onAnimationFrame() {
     this.forceUpdate();
@@ -14,7 +16,7 @@ class CountdownTimer extends Component {
                   .toFormat('hh:mm:ss.SSS');
     return (
       <div className="countdown-timer">
-        {diff}
+        <FixedWidthText text={diff} width="45px" />
       </div>
     );    
   }
