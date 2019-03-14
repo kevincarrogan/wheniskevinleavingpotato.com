@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
+
+import CountdownTimer from './CountdownTimer';
+
 import './App.css';
 
 class App extends Component {
   render() {
+    const leavingTime = new Date(2019, 2, 29, 17);
     return (
       <main>
         <h1>When is Kevin leaving Potato?</h1>
-        <div className="countdown-timer">
-          336:13:22.000
-        </div>
+        <CountdownTimer until={leavingTime} />
         <div className="logo">
           <svg className="potato-logo" role="presentation" width="186" height="180" viewBox="0 0 62 60" xmlns="http://www.w3.org/2000/svg">
             <g fill="none" fillRule="evenodd">
