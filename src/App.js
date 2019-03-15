@@ -14,7 +14,7 @@ const App = () => {
       <CountdownTimer until={leavingTime} />
       <AnimateLogo leavingTime={leavingTime}>
         {scale => (
-          <Logo scale={scale} />
+          <Logo scale={scale} width="180" height="186" />
         )}
       </AnimateLogo>
     </main>
