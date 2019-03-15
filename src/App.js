@@ -9,7 +9,7 @@ import { DisplayBefore, DisplayAfter } from './TimedDisplay';
 import './App.css';
 
 const App = () => {
-  const beginningTime = new Date(2019, 2, 18, 9);
+  const beginningTime = new Date(2019, 2, 29, 9);
   const leavingTime = new Date(2019, 2, 29, 17);
   return (
     <main>
