@@ -5,8 +5,11 @@ import Logo from './Logo';
 import AnimateLogo from './AnimateLogo';
 import RickRoll from './RickRoll';
 import { DisplayBefore, DisplayAfter } from './TimedDisplay';
+import TimedAudio from './TimedAudio';
 
 import './App.css';
+
+import sunrise from './sunrise.mp3';
 
 const App = () => {
   const beginningTime = new Date(2019, 2, 29, 9);
@@ -25,6 +28,7 @@ const App = () => {
       <DisplayAfter when={leavingTime}>
         <RickRoll />
       </DisplayAfter>
+      <TimedAudio src={sunrise} finish={leavingTime} />
     </main>
   );
 }
