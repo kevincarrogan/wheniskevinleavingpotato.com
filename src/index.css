@@ -1,3 +1,7 @@
+html {
+  font-size: 12px;
+}
+
 body {
   background-color: #20122e;
   color: #fff;
@@ -6,4 +10,10 @@ body {
   padding: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 8px;
+  }
 }

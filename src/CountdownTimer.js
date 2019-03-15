@@ -5,7 +5,7 @@ import { DateTime } from 'luxon';
 import FixedWidthText from './FixedWidthText';
 
 const Fixed = ({ t }) => (
-  <FixedWidthText text={t} width="90px" />
+  <FixedWidthText text={t} width="7.5rem" />
 );
 
 class CountdownTimer extends Component {

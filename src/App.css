@@ -9,11 +9,17 @@ h1, .countdown-timer, .logo {
 }
 
 h1 {
-  font-size: 90px;
+  font-size: 7.5rem;
   font-weight: 800;
 }
 
 .countdown-timer {
-  font-size: 144px;
+  font-size: 12rem;
   font-weight: 700;
+}
+
+@media screen and (max-width: 1200px) {
+  main {
+    width: 720px;
+  }
 }
