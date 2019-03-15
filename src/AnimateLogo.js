@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ReactAnimationFrame from 'react-animation-frame';
 import { DateTime } from 'luxon';
 
