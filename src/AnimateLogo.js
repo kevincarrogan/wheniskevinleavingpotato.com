@@ -2,6 +2,20 @@ import React, { Component } from 'react';
 import ReactAnimationFrame from 'react-animation-frame';
 import { DateTime } from 'luxon';
 
+const timeDiff = fromDate => (
+  DateTime
+    .fromJSDate(fromDate)
+    .diffNow()
+);
+
+const scaleFromInterval = interval => (
+  1 - (interval.toFormat('hh:mm:ss:SSS').split(':')[3] / 1000)
+);
+
+const easeOutQuad = value => (
+  (--value) * value * value + 1
+);
+
 class AnimateLogo extends Component {
   constructor(props) {
     super(props);
@@ -9,12 +23,10 @@ class AnimateLogo extends Component {
   }
 
   onAnimationFrame() {
-    const diff = DateTime
-                  .fromJSDate(this.props.leavingTime)
-                  .diffNow();
-    let scale = 1 - (diff.toFormat('hh:mm:ss:SSS').split(':')[3] / 1000);
-    scale = (--scale) * scale * scale + 1;
-    this.setState({scale});
+    const diff = timeDiff(this.props.leavingTime);
+    const scale = scaleFromInterval(diff);
+    const easedScale = easeOutQuad(scale);
+    this.setState({scale: easedScale});
   }
 
   render() {
