@@ -18,17 +18,17 @@ class CountdownTimer extends Component {
                   .fromJSDate(this.props.until)
                   .diffNow();
 
-    let [hh, mm, ss, sss] = diff.toFormat('hh:mm:ss:SSS').split(':');
+    const [hh, mm, ss, sss] = diff.toFormat('hh:mm:ss:SSS').split(':');
 
     return (
       <div className="countdown-timer">
-        { hh > 0 &&
+        { (hh > 0) &&
           <>
             <Fixed t={hh} />:
           </>
         }
         {
-          mm > 0 &&
+          (hh > 0 || mm > 0) &&
           <>
             <Fixed t={mm} />:
           </>
