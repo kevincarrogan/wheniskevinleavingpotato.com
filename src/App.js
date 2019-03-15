@@ -9,15 +9,16 @@ import { DisplayBefore, DisplayAfter } from './TimedDisplay';
 import './App.css';
 
 const App = () => {
+  const beginningTime = new Date(2019, 2, 18, 9);
   const leavingTime = new Date(2019, 2, 29, 17);
   return (
     <main>
       <h1>When is Kevin leaving Potato?</h1>
       <DisplayBefore when={leavingTime}>
         <CountdownTimer until={leavingTime} />
-        <AnimateLogo leavingTime={leavingTime}>
-          {scale => (
-            <Logo scale={scale} width="180" height="186" />
+        <AnimateLogo beginningTime={beginningTime} leavingTime={leavingTime}>
+          {(scale, opacity) => (
+            <Logo scale={scale} opacity={opacity} width="180" height="186" />
           )}
         </AnimateLogo>
       </DisplayBefore>
