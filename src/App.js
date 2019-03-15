@@ -10,7 +10,7 @@ import './App.css';
 
 const App = () => {
   const beginningTime = new Date(2019, 2, 29, 9);
-  const leavingTime = new Date(2019, 2, 29, 17);
+  const leavingTime = new Date(2019, 2, 29, 16, 30);
   return (
     <main>
       <h1>When is Kevin leaving Potato?</h1>
