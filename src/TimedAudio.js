@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactAnimationFrame from 'react-animation-frame';
-import { DateTime } from 'luxon';
+import React from "react";
+import ReactAnimationFrame from "react-animation-frame";
+import { DateTime } from "luxon";
 
 class TimedAudio extends React.Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class TimedAudio extends React.Component {
   onAnimationFrame() {
     if (this.duration && !this.playing && this.audio.current) {
       const finish = DateTime.fromJSDate(this.props.finish);
-      const playAt = DateTime.fromMillis(finish - (this.duration * 1000));
+      const playAt = DateTime.fromMillis(finish - this.duration * 1000);
       const now = DateTime.fromJSDate(new Date());
 
       if (now >= playAt && now < finish) {
@@ -26,7 +26,7 @@ class TimedAudio extends React.Component {
   }
 
   componentDidMount() {
-    this.audio.current.addEventListener('loadedmetadata', this.loadedMetadata);
+    this.audio.current.addEventListener("loadedmetadata", this.loadedMetadata);
   }
 
   loadedMetadata(evt) {
@@ -34,9 +34,7 @@ class TimedAudio extends React.Component {
   }
 
   render() {
-    return (
-      <audio src={this.props.src} ref={this.audio} />
-    );    
+    return <audio src={this.props.src} ref={this.audio} />;
   }
 }
 

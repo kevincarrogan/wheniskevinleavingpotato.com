@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
-import CountdownTimer from './CountdownTimer';
-import Logo from './Logo';
-import AnimateLogo from './AnimateLogo';
-import RickRoll from './RickRoll';
-import { DisplayBefore, DisplayAfter } from './TimedDisplay';
-import TimedAudio from './TimedAudio';
+import CountdownTimer from "./CountdownTimer";
+import Logo from "./Logo";
+import AnimateLogo from "./AnimateLogo";
+import RickRoll from "./RickRoll";
+import { DisplayBefore, DisplayAfter } from "./TimedDisplay";
+import TimedAudio from "./TimedAudio";
 
-import './App.css';
+import "./App.css";
 
-import sunrise from './sunrise.mp3';
+import sunrise from "./sunrise.mp3";
 
 const App = () => {
   const beginningTime = new Date(2019, 2, 29, 9);
@@ -31,6 +31,6 @@ const App = () => {
       <TimedAudio src={sunrise} finish={leavingTime} />
     </main>
   );
-}
+};
 
 export default App;
