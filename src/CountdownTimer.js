@@ -14,7 +14,8 @@ class CountdownTimer extends Component {
   render() {
     const diff = DateTime.fromJSDate(this.props.until).diffNow();
 
-    const [hh, mm, ss, sss] = diff.toFormat("hh:mm:ss:SSS").split(":");
+    let [hh, mm, ss, millis] = diff.toFormat("hh:mm:ss:SSS").split(":");
+    millis = `${millis[0]}${millis[1]}`;
 
     return (
       <div className="countdown-timer">
@@ -28,7 +29,7 @@ class CountdownTimer extends Component {
             <Fixed t={mm} />:
           </>
         )}
-        <Fixed t={ss} />.<Fixed t={sss} />
+        <Fixed t={ss} />.<Fixed t={millis} />
       </div>
     );
   }
