@@ -19,6 +19,10 @@ class TimedAudio extends React.Component {
       const now = DateTime.fromJSDate(new Date());
 
       if (now >= playAt && now < finish) {
+        const diffInSeconds = (now - playAt) / 1000;
+        if (diffInSeconds > 1) {
+          this.audio.current.currentTime = diffInSeconds;
+        }
         this.playing = true;
         this.audio.current.play();
       }
