@@ -24,7 +24,9 @@ class TimedAudio extends React.Component {
           this.audio.current.currentTime = diffInSeconds;
         }
         this.playing = true;
-        this.audio.current.play();
+        this.audio.current.play().catch(error => {
+          return;
+        });
       }
     }
   }
