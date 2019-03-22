@@ -9,6 +9,8 @@ class TimedAudio extends React.Component {
     this.playing = false;
     this.duration = null;
 
+    this.state = { showControls: false };
+
     this.loadedMetadata = this.loadedMetadata.bind(this);
   }
 
@@ -25,7 +27,7 @@ class TimedAudio extends React.Component {
         }
         this.playing = true;
         this.audio.current.play().catch(error => {
-          return;
+          this.setState({ showControls: true });
         });
       }
     }
@@ -40,7 +42,13 @@ class TimedAudio extends React.Component {
   }
 
   render() {
-    return <audio src={this.props.src} ref={this.audio} />;
+    return (
+      <audio
+        controls={this.state.showControls}
+        src={this.props.src}
+        ref={this.audio}
+      />
+    );
   }
 }
 
