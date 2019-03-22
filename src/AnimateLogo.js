@@ -1,11 +1,11 @@
-import { Component } from "react";
-import ReactAnimationFrame from "react-animation-frame";
-import { DateTime } from "luxon";
+import { Component } from 'react';
+import ReactAnimationFrame from 'react-animation-frame';
+import { DateTime } from 'luxon';
 
 const timeDiff = fromDate => DateTime.fromJSDate(fromDate).diffNow();
 
 const scaleFromInterval = interval =>
-  1 - interval.toFormat("hh:mm:ss:SSS").split(":")[3] / 1000;
+  1 - interval.toFormat('hh:mm:ss:SSS').split(':')[3] / 1000;
 
 const easeOutQuad = value => --value * value * value + 1;
 

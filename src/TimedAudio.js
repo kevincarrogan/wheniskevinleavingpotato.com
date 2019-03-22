@@ -1,6 +1,6 @@
-import React from "react";
-import ReactAnimationFrame from "react-animation-frame";
-import { DateTime } from "luxon";
+import React from 'react';
+import ReactAnimationFrame from 'react-animation-frame';
+import { DateTime } from 'luxon';
 
 class TimedAudio extends React.Component {
   constructor(props) {
@@ -34,7 +34,7 @@ class TimedAudio extends React.Component {
   }
 
   componentDidMount() {
-    this.audio.current.addEventListener("loadedmetadata", this.loadedMetadata);
+    this.audio.current.addEventListener('loadedmetadata', this.loadedMetadata);
   }
 
   loadedMetadata(evt) {

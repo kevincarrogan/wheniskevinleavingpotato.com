@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import ReactAnimationFrame from "react-animation-frame";
-import { DateTime } from "luxon";
+import React, { Component } from 'react';
+import ReactAnimationFrame from 'react-animation-frame';
+import { DateTime } from 'luxon';
 
-import FixedWidthText from "./FixedWidthText";
+import FixedWidthText from './FixedWidthText';
 
 const Fixed = ({ t }) => <FixedWidthText text={t} width="7.5rem" />;
 
@@ -14,7 +14,7 @@ class CountdownTimer extends Component {
   render() {
     const diff = DateTime.fromJSDate(this.props.until).diffNow();
 
-    let [hh, mm, ss, millis] = diff.toFormat("hh:mm:ss:SSS").split(":");
+    let [hh, mm, ss, millis] = diff.toFormat('hh:mm:ss:SSS').split(':');
     millis = `${millis[0]}${millis[1]}`;
 
     return (

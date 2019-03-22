@@ -1,5 +1,5 @@
-import { Component } from "react";
-import ReactAnimationFrame from "react-animation-frame";
+import { Component } from 'react';
+import ReactAnimationFrame from 'react-animation-frame';
 
 class DisplayBefore extends Component {
   constructor(props) {

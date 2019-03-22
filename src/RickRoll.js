@@ -1,5 +1,5 @@
-import React from "react";
-import YouTube from "react-youtube";
+import React from 'react';
+import YouTube from 'react-youtube';
 
 const RickRoll = () => (
   <YouTube
@@ -11,8 +11,8 @@ const RickRoll = () => (
         autoplay: 1,
         controls: 0,
         playsinline: 1,
-        loop: 1
-      }
+        loop: 1,
+      },
     }}
   />
 );
