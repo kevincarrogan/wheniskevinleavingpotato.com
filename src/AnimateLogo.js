@@ -17,40 +17,51 @@ const currentScale = leavingTime => {
   return easedScale;
 };
 
-const currentOpacity = (beginningTime, leavingTime) => {
+const ratioFromTimePeriod = (value, beginningTime, leavingTime) => {
+  if (new Date() < beginningTime) {
+    return value;
+  }
+
   const beginning = DateTime.fromJSDate(beginningTime);
   const leaving = DateTime.fromJSDate(leavingTime);
   const now = DateTime.fromJSDate(new Date());
-
   const diffToLeaving = leaving.diff(now);
   const diffPeriod = leaving.diff(beginning);
+  const ratio = (100 / diffPeriod) * diffToLeaving;
 
-  return ((100 / diffPeriod) * diffToLeaving) / 100;
+  return value * (ratio / 100);
+};
+
+const currentWidth = (beginningTime, leavingTime) => {
+  return ratioFromTimePeriod(180, beginningTime, leavingTime);
+};
+
+const currentHeight = (beginningTime, leavingTime) => {
+  return ratioFromTimePeriod(186, beginningTime, leavingTime);
 };
 
 class AnimateLogo extends Component {
   constructor(props) {
     super(props);
-    const scale = currentScale(this.props.leavingTime);
-    const opacity = currentOpacity(
-      this.props.beginningTime,
-      this.props.leavingTime
-    );
-    this.state = { scale, opacity };
+    const { leavingTime, beginningTime } = this.props;
+    const scale = currentScale(leavingTime);
+    const opacity = 1;
+    const width = currentWidth(beginningTime, leavingTime);
+    const height = currentHeight(beginningTime, leavingTime);
+    this.state = { scale, opacity, width, height };
   }
 
   onAnimationFrame() {
-    const scale = currentScale(this.props.leavingTime);
-    const opacity = currentOpacity(
-      this.props.beginningTime,
-      this.props.leavingTime
-    );
-    this.setState({ scale, opacity });
+    const { leavingTime, beginningTime } = this.props;
+    const scale = currentScale(leavingTime);
+    const width = currentWidth(beginningTime, leavingTime);
+    const height = currentHeight(beginningTime, leavingTime);
+    this.setState({ ...this.state, scale, width, height });
   }
 
   render() {
-    const { scale, opacity } = this.state;
-    return this.props.children(scale, opacity);
+    const { scale, opacity, width, height } = this.state;
+    return this.props.children(scale, opacity, width, height);
   }
 }
 

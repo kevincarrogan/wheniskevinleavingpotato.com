@@ -20,8 +20,13 @@ const App = () => {
       <DisplayBefore when={leavingTime}>
         <CountdownTimer until={leavingTime} />
         <AnimateLogo beginningTime={beginningTime} leavingTime={leavingTime}>
-          {(scale, opacity) => (
-            <Logo scale={scale} opacity={opacity} width="180" height="186" />
+          {(scale, opacity, width, height) => (
+            <Logo
+              scale={scale}
+              opacity={opacity}
+              width={width}
+              height={height}
+            />
           )}
         </AnimateLogo>
       </DisplayBefore>
