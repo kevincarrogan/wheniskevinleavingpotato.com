@@ -1,9 +1,12 @@
 import React from 'react';
 
-const Logo = ({ scale, opacity, width, height }) => (
+const Logo = ({ scale, opacity, rotate, width, height }) => (
   <div className="logo">
     <svg
-      style={{ transform: `scale(${scale})`, opacity: `${opacity}` }}
+      style={{
+        transform: `scale(${scale}) rotate(${rotate}deg)`,
+        opacity: `${opacity}`,
+      }}
       className="potato-logo"
       role="presentation"
       width={width}

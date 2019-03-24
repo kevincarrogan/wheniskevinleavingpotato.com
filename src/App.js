@@ -6,6 +6,7 @@ import AnimateLogo from './AnimateLogo';
 import RickRoll from './RickRoll';
 import { DisplayBefore, DisplayAfter } from './TimedDisplay';
 import TimedAudio from './TimedAudio';
+import Game from './Game';
 
 import './App.css';
 
@@ -26,6 +27,7 @@ const App = () => {
               opacity={opacity}
               width={width}
               height={height}
+              rotate="0"
             />
           )}
         </AnimateLogo>
@@ -33,6 +35,7 @@ const App = () => {
       <DisplayAfter when={leavingTime}>
         <RickRoll />
       </DisplayAfter>
+      <Game />
       <TimedAudio src={sunrise} finish={leavingTime} />
     </main>
   );
