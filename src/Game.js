@@ -3,6 +3,8 @@ import ReactAnimationFrame from 'react-animation-frame';
 
 import Ship from './Ship';
 
+import styles from './Game.module.css';
+
 class Game extends Component {
   constructor(props) {
     super(props);
@@ -31,7 +33,7 @@ class Game extends Component {
 
   render() {
     return (
-      <div className="game">
+      <div className={styles.game}>
         <Ship tick={this.state.tick} fire={this.fire} />
       </div>
     );

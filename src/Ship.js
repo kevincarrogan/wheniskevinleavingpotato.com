@@ -37,8 +37,8 @@ class Ship extends Component {
     return (
       <div onClick={this.onClick}>
         <Logo
-          width="180"
-          height="186"
+          width="90"
+          height="93"
           rotate={this.state.rotation}
           scale="1"
           opacity="1"
