@@ -26,6 +26,8 @@ class Ship extends Component {
   }
 
   onClick() {
+    this.props.fire(this.state.rotation);
+
     this.setState((state, props) => ({
       direction: state.direction * -1,
     }));

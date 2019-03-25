@@ -10,6 +10,8 @@ class Game extends Component {
     this.fps = 60;
     this._interval = 1000 / this.fps;
 
+    this.fire = this.fire.bind(this);
+
     this.state = {
       tick: 0,
     };
@@ -23,10 +25,14 @@ class Game extends Component {
     }));
   }
 
+  fire(rotation) {
+    console.log(rotation);
+  }
+
   render() {
     return (
       <div className="game">
-        <Ship tick={this.state.tick} />
+        <Ship tick={this.state.tick} fire={this.fire} />
       </div>
     );
   }
