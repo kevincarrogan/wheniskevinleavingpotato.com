@@ -27,7 +27,6 @@ class Ship extends Component {
 
   onClick() {
     this.setState((state, props) => ({
-      ...state,
       direction: state.direction * -1,
     }));
   }
