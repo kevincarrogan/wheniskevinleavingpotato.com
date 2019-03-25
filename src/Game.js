@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactAnimationFrame from 'react-animation-frame';
 
 import Ship from './Ship';
+import Bullet from './Bullet';
 
 import styles from './Game.module.css';
 
@@ -40,8 +41,8 @@ class Game extends Component {
       <div className={styles.game}>
         <Ship tick={this.state.tick} fire={this.fire} />
         <ul>
-          {this.state.bullets.map((bullet, i) => (
-            <li key={i}>{bullet}</li>
+          {this.state.bullets.map((rotation, i) => (
+            <Bullet key={i} tick={this.state.tick} rotation={rotation} />
           ))}
         </ul>
       </div>

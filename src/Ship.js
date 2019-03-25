@@ -35,7 +35,14 @@ class Ship extends Component {
 
   render() {
     return (
-      <div onClick={this.onClick}>
+      <div
+        onClick={this.onClick}
+        style={{
+          position: `absolute`,
+          left: `255px`,
+          top: `235.5px`,
+        }}
+      >
         <Logo
           width="90"
           height="93"
