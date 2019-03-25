@@ -16,25 +16,34 @@ class Game extends Component {
 
     this.state = {
       tick: 0,
+      bullets: [],
     };
   }
 
   onAnimationFrame(timestamp, lastTimestamp) {
     const diff = timestamp - lastTimestamp;
     const tick = Math.ceil(diff / this._interval);
+
     this.setState((state, props) => ({
       tick: state.tick + tick,
     }));
   }
 
   fire(rotation) {
-    console.log(rotation);
+    this.setState((state, props) => ({
+      bullets: [...this.state.bullets, rotation],
+    }));
   }
 
   render() {
     return (
       <div className={styles.game}>
         <Ship tick={this.state.tick} fire={this.fire} />
+        <ul>
+          {this.state.bullets.map((bullet, i) => (
+            <li key={i}>{bullet}</li>
+          ))}
+        </ul>
       </div>
     );
   }
