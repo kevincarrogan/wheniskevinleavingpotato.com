@@ -80,22 +80,29 @@ class Game extends Component {
       return bullets;
     }
 
-    return bullets.map(bullet => {
-      const diff = tick - bullet.lastTick;
-      const movement = bullet.movement + diff * velocity;
-      const radians = toRadians(bullet.rotation);
-      const x = movement * Math.cos(radians + Math.PI * 1.5);
-      const y = movement * Math.sin(radians + Math.PI * 1.5);
-      const lastTick = tick;
-      const updatedBullet = {
-        ...bullet,
-        movement,
-        lastTick,
-        x,
-        y,
-      };
-      return updatedBullet;
-    });
+    return bullets
+      .map(bullet => {
+        const diff = tick - bullet.lastTick;
+        const movement = bullet.movement + diff * velocity;
+        const radians = toRadians(bullet.rotation);
+        const x = movement * Math.cos(radians + Math.PI * 1.5);
+        const y = movement * Math.sin(radians + Math.PI * 1.5);
+        const lastTick = tick;
+        const updatedBullet = {
+          ...bullet,
+          movement,
+          lastTick,
+          x,
+          y,
+        };
+        return updatedBullet;
+      })
+      .filter(bullet => {
+        const left = 295 - bullet.x;
+        const top = 295 - bullet.y;
+
+        return !(left < 0 || left > 600 || top < 0 || top > 600);
+      });
   }
 
   fire(rotation) {
