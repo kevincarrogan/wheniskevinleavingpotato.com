@@ -40,7 +40,7 @@ class Ship extends Component {
         style={{
           position: `absolute`,
           left: `255px`,
-          top: `235.5px`,
+          top: `253.5px`,
         }}
       >
         <Logo
