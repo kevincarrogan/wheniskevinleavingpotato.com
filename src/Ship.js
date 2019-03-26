@@ -34,13 +34,15 @@ class Ship extends Component {
   }
 
   render() {
+    const left = this.props.x - 90 / 2;
+    const top = this.props.y - 93 / 2;
     return (
       <div
         onClick={this.onClick}
         style={{
           position: `absolute`,
-          left: `255px`,
-          top: `253.5px`,
+          left: `${left}px`,
+          top: `${top}px`,
         }}
       >
         <Logo

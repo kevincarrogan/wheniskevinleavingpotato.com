@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "detect-collisions": "^2.4.3",
     "luxon": "^1.11.4",
     "react": "^16.8.4",
     "react-animation-frame": "^1.0.2",

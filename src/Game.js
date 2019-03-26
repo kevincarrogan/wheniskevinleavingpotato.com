@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactAnimationFrame from 'react-animation-frame';
 import uuidv4 from 'uuid/v4';
+import { Collisions } from 'detect-collisions';
 
 import Ship from './Ship';
 import Bullet from './Bullet';
@@ -25,6 +26,13 @@ class Game extends Component {
     this.fire = this.fire.bind(this);
     this.initBullet = this.initBullet.bind(this);
     this.updateBullets = this.updateBullets.bind(this);
+
+    this.collisionSystem = new Collisions();
+    this.shipCircle = this.collisionSystem.createCircle(300, 300, 45);
+    this.enemies = {};
+    this.collisionSystem.update();
+
+    this.canvasRef = React.createRef();
 
     this.state = {
       tick: 0,
@@ -63,8 +71,9 @@ class Game extends Component {
     const id = uuidv4();
     const movement = 45;
     const radians = toRadians(rotation);
-    const x = movement * Math.cos(radians + Math.PI * 1.5);
-    const y = movement * Math.sin(radians + Math.PI * 1.5);
+    const x = movement * Math.cos(radians + Math.PI * 1.5) + 300;
+    const y = movement * Math.sin(radians + Math.PI * 1.5) + 300;
+
     return {
       lastTick: this.state.tick,
       id,
@@ -87,8 +96,8 @@ class Game extends Component {
         const diff = tick - bullet.lastTick;
         const movement = bullet.movement + diff * velocity;
         const radians = toRadians(bullet.rotation);
-        const x = movement * Math.cos(radians + Math.PI * 1.5);
-        const y = movement * Math.sin(radians + Math.PI * 1.5);
+        const x = movement * Math.cos(radians + Math.PI * 1.5) + 300;
+        const y = movement * Math.sin(radians + Math.PI * 1.5) + 300;
         const lastTick = tick;
         const updatedBullet = {
           ...bullet,
@@ -119,8 +128,10 @@ class Game extends Component {
     const id = uuidv4();
     const movement = 450;
     const radians = toRadians(rotation);
-    const x = movement * Math.cos(radians + Math.PI * 0.5);
-    const y = movement * Math.sin(radians + Math.PI * 0.5);
+    const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
+    const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
+
+    this.enemies[id] = this.collisionSystem.createCircle(x, y, 25);
 
     return {
       lastTick: this.state.tick,
@@ -151,9 +162,12 @@ class Game extends Component {
       const diff = tick - enemy.lastTick;
       const movement = enemy.movement - diff * velocity;
       const radians = toRadians(enemy.rotation);
-      const x = movement * Math.cos(radians + Math.PI * 0.5);
-      const y = movement * Math.sin(radians + Math.PI * 0.5);
+      const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
+      const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
       const lastTick = tick;
+      const collisionBody = this.enemies[enemy.id];
+      collisionBody.x = x;
+      collisionBody.y = y;
       const updatedEnemy = {
         ...enemy,
         movement,
@@ -166,16 +180,38 @@ class Game extends Component {
   }
 
   render() {
+    if (this.canvasRef.current) {
+      this.collisionSystem.update();
+
+      const canvas = this.canvasRef.current;
+      const context = canvas.getContext('2d');
+      context.clearRect(0, 0, canvas.width, canvas.height);
+
+      context.strokeStyle = '#FFFFFF';
+      context.beginPath();
+
+      this.collisionSystem.draw(context);
+
+      context.stroke();
+    }
     return (
-      <div className={styles.game}>
-        <Ship tick={this.state.tick} fire={this.fire} />
-        {this.state.bullets.map(bullet => (
-          <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
-        ))}
-        {this.state.enemies.map(enemy => (
-          <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
-        ))}
-      </div>
+      <>
+        <canvas
+          style={{ outline: `1px solid red` }}
+          width="600"
+          height="600"
+          ref={this.canvasRef}
+        />
+        <div className={styles.game}>
+          <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
+          {this.state.bullets.map(bullet => (
+            <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
+          ))}
+          {this.state.enemies.map(enemy => (
+            <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
+          ))}
+        </div>
+      </>
     );
   }
 }

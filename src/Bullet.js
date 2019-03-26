@@ -1,8 +1,8 @@
 import React from 'react';
 
 const Bullet = ({ x, y }) => {
-  const left = 295 - x;
-  const top = 295 - y;
+  const left = x - 10 / 2;
+  const top = y - 10 / 2;
 
   return (
     <div

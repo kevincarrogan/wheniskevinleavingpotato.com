@@ -3,8 +3,8 @@ import image from './face.png';
 import React from 'react';
 
 const Enemy = ({ x, y }) => {
-  const left = 275 - x;
-  const top = 275 - y;
+  const left = x - 50 / 2;
+  const top = y - 50 / 2;
 
   return (
     <img
