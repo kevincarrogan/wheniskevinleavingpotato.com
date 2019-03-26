@@ -41,9 +41,11 @@ class Game extends Component {
     this.setState((state, props) => {
       const newTick = state.tick + tick;
       const bullets = this.updateBullets(state.bullets, newTick);
+      const enemies = this.updateEnemies(state.enemies, newTick);
       return {
         tick: newTick,
         bullets,
+        enemies,
       };
     });
 
@@ -136,6 +138,31 @@ class Game extends Component {
     this.setState((state, props) => ({
       enemies: [...this.state.enemies, enemy],
     }));
+  }
+
+  updateEnemies(enemies, tick) {
+    const velocity = 3;
+
+    if (enemies.length === 0) {
+      return enemies;
+    }
+
+    return enemies.map(enemy => {
+      const diff = tick - enemy.lastTick;
+      const movement = enemy.movement - diff * velocity;
+      const radians = toRadians(enemy.rotation);
+      const x = movement * Math.cos(radians + Math.PI * 0.5);
+      const y = movement * Math.sin(radians + Math.PI * 0.5);
+      const lastTick = tick;
+      const updatedEnemy = {
+        ...enemy,
+        movement,
+        lastTick,
+        x,
+        y,
+      };
+      return updatedEnemy;
+    });
   }
 
   render() {
