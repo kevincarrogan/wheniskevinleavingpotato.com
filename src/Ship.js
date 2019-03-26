@@ -46,6 +46,7 @@ class Ship extends Component {
         onClick={this.onClick}
         onMouseDown={this.onMouseDown}
         style={{
+          cursor: `pointer`,
           position: `absolute`,
           left: `${left}px`,
           top: `${top}px`,
