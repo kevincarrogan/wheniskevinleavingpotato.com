@@ -17,7 +17,7 @@ class Ship extends Component {
 
   static getDerivedStateFromProps(props, state) {
     const diff = (props.tick - state.lastTick) * state.direction;
-    const rotation = (state.rotation + diff * 2.5) % 360;
+    const rotation = (state.rotation + diff * 3.5) % 360;
 
     return {
       lastTick: props.tick,
