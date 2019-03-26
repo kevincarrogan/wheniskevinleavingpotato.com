@@ -20,22 +20,11 @@ const App = () => {
       <h1>When is Kevin leaving Potato?</h1>
       <DisplayBefore when={leavingTime}>
         <CountdownTimer until={leavingTime} />
-        <AnimateLogo beginningTime={beginningTime} leavingTime={leavingTime}>
-          {(scale, opacity, width, height) => (
-            <Logo
-              scale={scale}
-              opacity={opacity}
-              width={width}
-              height={height}
-              rotate="0"
-            />
-          )}
-        </AnimateLogo>
+        <Game />
       </DisplayBefore>
       <DisplayAfter when={leavingTime}>
         <RickRoll />
       </DisplayAfter>
-      <Game />
       <TimedAudio src={sunrise} finish={leavingTime} />
     </main>
   );
