@@ -29,7 +29,7 @@ class Game extends Component {
     this.state = {
       tick: 0,
       bullets: [],
-      enemies: {},
+      enemies: [],
       enemySpawnTimer: 0,
     };
   }
@@ -113,9 +113,28 @@ class Game extends Component {
     }));
   }
 
+  initEnemy(rotation) {
+    const id = uuidv4();
+    const movement = 450;
+    const radians = toRadians(rotation);
+    const x = movement * Math.cos(radians + Math.PI * 0.5);
+    const y = movement * Math.sin(radians + Math.PI * 0.5);
+
+    return {
+      lastTick: this.state.tick,
+      id,
+      rotation,
+      movement,
+      x,
+      y,
+    };
+  }
+
   addEnemy(rotation) {
+    const enemy = this.initEnemy(rotation);
+
     this.setState((state, props) => ({
-      enemies: { ...this.state.enemies, [state.tick]: rotation },
+      enemies: [...this.state.enemies, enemy],
     }));
   }
 
@@ -126,8 +145,8 @@ class Game extends Component {
         {this.state.bullets.map(bullet => (
           <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
         ))}
-        {Object.entries(this.state.enemies).map(([id, rotation]) => (
-          <Enemy id={id} key={id} rotation={rotation} tick={this.state.tick} />
+        {this.state.enemies.map(enemy => (
+          <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
         ))}
       </div>
     );
