@@ -30,6 +30,7 @@ class Game extends Component {
     this.collisionSystem = new Collisions();
     this.shipCircle = this.collisionSystem.createCircle(300, 300, 45);
     this.enemies = {};
+    this.bullets = {};
     this.collisionSystem.update();
 
     this.canvasRef = React.createRef();
@@ -71,8 +72,10 @@ class Game extends Component {
     const id = uuidv4();
     const movement = 45;
     const radians = toRadians(rotation);
-    const x = movement * Math.cos(radians + Math.PI * 1.5) + 300;
-    const y = movement * Math.sin(radians + Math.PI * 1.5) + 300;
+    const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
+    const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
+
+    this.bullets[id] = this.collisionSystem.createCircle(x, y, 5);
 
     return {
       lastTick: this.state.tick,
@@ -91,29 +94,25 @@ class Game extends Component {
       return bullets;
     }
 
-    return bullets
-      .map(bullet => {
-        const diff = tick - bullet.lastTick;
-        const movement = bullet.movement + diff * velocity;
-        const radians = toRadians(bullet.rotation);
-        const x = movement * Math.cos(radians + Math.PI * 1.5) + 300;
-        const y = movement * Math.sin(radians + Math.PI * 1.5) + 300;
-        const lastTick = tick;
-        const updatedBullet = {
-          ...bullet,
-          movement,
-          lastTick,
-          x,
-          y,
-        };
-        return updatedBullet;
-      })
-      .filter(bullet => {
-        const left = 295 - bullet.x;
-        const top = 295 - bullet.y;
-
-        return !(left < 0 || left > 600 || top < 0 || top > 600);
-      });
+    return bullets.map(bullet => {
+      const diff = tick - bullet.lastTick;
+      const movement = bullet.movement + diff * velocity;
+      const radians = toRadians(bullet.rotation);
+      const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
+      const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
+      const collisionBody = this.bullets[bullet.id];
+      collisionBody.x = x;
+      collisionBody.y = y;
+      const lastTick = tick;
+      const updatedBullet = {
+        ...bullet,
+        movement,
+        lastTick,
+        x,
+        y,
+      };
+      return updatedBullet;
+    });
   }
 
   fire(rotation) {
