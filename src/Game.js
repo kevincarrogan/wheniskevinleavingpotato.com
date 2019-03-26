@@ -125,10 +125,14 @@ class Game extends Component {
         };
         return updatedBullet;
       })
-      .filter(
-        bullet =>
-          !(bullet.x < 0 || bullet.x > 600 || bullet.y < 0 || bullet.y > 600)
-      );
+      .filter(bullet => {
+        const filterBullet =
+          bullet.x < 0 || bullet.x > 600 || bullet.y < 0 || bullet.y > 600;
+        if (filterBullet) {
+          delete this.bulletBodies[bullet.id];
+        }
+        return !filterBullet;
+      });
   }
 
   fire(rotation) {
@@ -173,25 +177,45 @@ class Game extends Component {
       return enemies;
     }
 
-    return enemies.map(enemy => {
-      const diff = tick - enemy.lastTick;
-      const movement = enemy.movement - diff * velocity;
-      const radians = toRadians(enemy.rotation);
-      const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
-      const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
-      const lastTick = tick;
-      const collisionBody = this.enemyBodies[enemy.id];
-      collisionBody.x = x;
-      collisionBody.y = y;
-      const updatedEnemy = {
-        ...enemy,
-        movement,
-        lastTick,
-        x,
-        y,
-      };
-      return updatedEnemy;
-    });
+    return enemies
+      .map(enemy => {
+        const diff = tick - enemy.lastTick;
+        const movement = enemy.movement - diff * velocity;
+        const radians = toRadians(enemy.rotation);
+        const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
+        const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
+        const lastTick = tick;
+        const collisionBody = this.enemyBodies[enemy.id];
+        collisionBody.x = x;
+        collisionBody.y = y;
+        const updatedEnemy = {
+          ...enemy,
+          movement,
+          lastTick,
+          x,
+          y,
+        };
+        return updatedEnemy;
+      })
+      .filter(enemy => {
+        const enemyBody = this.enemyBodies[enemy.id];
+        const potentials = enemyBody.potentials();
+
+        if (potentials.length) {
+          for (const body of potentials) {
+            if (
+              enemyBody.collides(body) &&
+              Object.values(this.bulletBodies).includes(body)
+            ) {
+              delete this.enemyBodies[enemy.id];
+              this.collisionSystem.remove(enemyBody);
+              return false;
+            }
+          }
+        }
+
+        return true;
+      });
   }
 
   isGameOver() {
@@ -224,7 +248,7 @@ class Game extends Component {
 
   render() {
     return (
-      <>
+      <div className={styles.gameWrapper}>
         <div className={styles.game}>
           {!this.state.gameOver && (
             <>
@@ -238,13 +262,15 @@ class Game extends Component {
             </>
           )}
           {this.state.gameOver && (
-            <>
-              <h1>Game Over</h1>
-              <button onClick={this.restart}>Restart?</button>
-            </>
+            <div className={styles.gameOver}>
+              <h1 className={styles.gameOverTitle}>Game Over</h1>
+              <button className={styles.gameOverButton} onClick={this.restart}>
+                Restart?
+              </button>
+            </div>
           )}
         </div>
-      </>
+      </div>
     );
   }
 }

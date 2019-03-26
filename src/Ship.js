@@ -25,12 +25,17 @@ class Ship extends Component {
     };
   }
 
-  onClick() {
+  onClick(evt) {
+    evt.preventDefault();
     this.props.fire(this.state.rotation);
 
     this.setState((state, props) => ({
       direction: state.direction * -1,
     }));
+  }
+
+  onMouseDown(evt) {
+    evt.preventDefault();
   }
 
   render() {
@@ -39,6 +44,7 @@ class Ship extends Component {
     return (
       <div
         onClick={this.onClick}
+        onMouseDown={this.onMouseDown}
         style={{
           position: `absolute`,
           left: `${left}px`,
