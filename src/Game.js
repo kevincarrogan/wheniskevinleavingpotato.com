@@ -207,13 +207,13 @@ class Game extends Component {
           ref={this.canvasRef}
         />
         <div className={styles.game}>
-          <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
           {this.state.bullets.map(bullet => (
             <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
           ))}
           {this.state.enemies.map(enemy => (
             <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
           ))}
+          <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
         </div>
       </>
     );
