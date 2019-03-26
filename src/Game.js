@@ -28,9 +28,9 @@ class Game extends Component {
     this.updateBullets = this.updateBullets.bind(this);
 
     this.collisionSystem = new Collisions();
-    this.shipCircle = this.collisionSystem.createCircle(300, 300, 45);
-    this.enemies = {};
-    this.bullets = {};
+    this.shipBody = this.collisionSystem.createCircle(300, 300, 45);
+    this.enemyBodies = {};
+    this.bulletBodies = {};
     this.collisionSystem.update();
 
     this.canvasRef = React.createRef();
@@ -40,6 +40,7 @@ class Game extends Component {
       bullets: [],
       enemies: [],
       enemySpawnTimer: 0,
+      gameOver: false,
     };
   }
 
@@ -47,14 +48,21 @@ class Game extends Component {
     const diff = timestamp - lastTimestamp;
     const tick = Math.ceil(diff / this._interval);
 
+    if (this.state.gameOver) {
+      return;
+    }
+
     this.setState((state, props) => {
       const newTick = state.tick + tick;
       const bullets = this.updateBullets(state.bullets, newTick);
       const enemies = this.updateEnemies(state.enemies, newTick);
+      const gameOver = this.isGameOver();
+
       return {
         tick: newTick,
         bullets,
         enemies,
+        gameOver,
       };
     });
 
@@ -75,7 +83,7 @@ class Game extends Component {
     const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
     const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
 
-    this.bullets[id] = this.collisionSystem.createCircle(x, y, 5);
+    this.bulletBodies[id] = this.collisionSystem.createCircle(x, y, 5);
 
     return {
       lastTick: this.state.tick,
@@ -101,7 +109,7 @@ class Game extends Component {
         const radians = toRadians(bullet.rotation);
         const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
         const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
-        const collisionBody = this.bullets[bullet.id];
+        const collisionBody = this.bulletBodies[bullet.id];
         collisionBody.x = x;
         collisionBody.y = y;
         const lastTick = tick;
@@ -135,7 +143,7 @@ class Game extends Component {
     const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
     const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
 
-    this.enemies[id] = this.collisionSystem.createCircle(x, y, 25);
+    this.enemyBodies[id] = this.collisionSystem.createCircle(x, y, 25);
 
     return {
       lastTick: this.state.tick,
@@ -169,7 +177,7 @@ class Game extends Component {
       const x = movement * Math.cos(radians + Math.PI * 0.5) + 300;
       const y = movement * Math.sin(radians + Math.PI * 0.5) + 300;
       const lastTick = tick;
-      const collisionBody = this.enemies[enemy.id];
+      const collisionBody = this.enemyBodies[enemy.id];
       collisionBody.x = x;
       collisionBody.y = y;
       const updatedEnemy = {
@@ -181,6 +189,20 @@ class Game extends Component {
       };
       return updatedEnemy;
     });
+  }
+
+  isGameOver() {
+    const potentials = this.shipBody.potentials();
+
+    for (const body of potentials) {
+      if (
+        this.shipBody.collides(body) &&
+        Object.values(this.enemyBodies).includes(body)
+      ) {
+        return true;
+      }
+    }
+    return false;
   }
 
   render() {
@@ -207,13 +229,17 @@ class Game extends Component {
           ref={this.canvasRef}
         />
         <div className={styles.game}>
-          {this.state.bullets.map(bullet => (
-            <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
-          ))}
-          {this.state.enemies.map(enemy => (
-            <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
-          ))}
-          <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
+          {!this.state.gameOver && (
+            <>
+              {this.state.bullets.map(bullet => (
+                <Bullet key={bullet.id} x={bullet.x} y={bullet.y} />
+              ))}
+              {this.state.enemies.map(enemy => (
+                <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
+              ))}
+              <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
+            </>
+          )}
         </div>
       </>
     );
