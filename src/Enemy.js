@@ -8,6 +8,7 @@ const Enemy = ({ x, y }) => {
 
   return (
     <img
+      alt=""
       src={image}
       style={{
         borderRadius: `50%`,
