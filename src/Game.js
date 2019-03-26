@@ -47,7 +47,7 @@ class Game extends Component {
 
   onAnimationFrame(timestamp, lastTimestamp) {
     const diff = timestamp - lastTimestamp;
-    const tick = Math.ceil(diff / this._interval);
+    const tick = Math.round(diff / this._interval);
 
     if (this.state.gameOver) {
       return;
