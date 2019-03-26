@@ -26,6 +26,7 @@ class Game extends Component {
     this.fire = this.fire.bind(this);
     this.initBullet = this.initBullet.bind(this);
     this.updateBullets = this.updateBullets.bind(this);
+    this.restart = this.restart.bind(this);
 
     this.collisionSystem = new Collisions();
     this.shipBody = this.collisionSystem.createCircle(300, 300, 45);
@@ -57,6 +58,8 @@ class Game extends Component {
       const bullets = this.updateBullets(state.bullets, newTick);
       const enemies = this.updateEnemies(state.enemies, newTick);
       const gameOver = this.isGameOver();
+
+      this.collisionSystem.update();
 
       return {
         tick: newTick,
@@ -205,6 +208,20 @@ class Game extends Component {
     return false;
   }
 
+  restart() {
+    this.setState((state, props) => {
+      return {
+        tick: 0,
+        bullets: [],
+        enemies: [],
+        enemySpawnTimer: 0,
+        gameOver: false,
+      };
+    });
+    this.enemyBodies = {};
+    this.bulletBodies = {};
+  }
+
   render() {
     return (
       <>
@@ -218,6 +235,12 @@ class Game extends Component {
                 <Enemy key={enemy.id} x={enemy.x} y={enemy.y} />
               ))}
               <Ship x="300" y="300" tick={this.state.tick} fire={this.fire} />
+            </>
+          )}
+          {this.state.gameOver && (
+            <>
+              <h1>Game Over</h1>
+              <button onClick={this.restart}>Restart?</button>
             </>
           )}
         </div>
