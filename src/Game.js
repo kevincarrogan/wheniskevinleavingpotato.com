@@ -3,6 +3,7 @@ import ReactAnimationFrame from 'react-animation-frame';
 
 import Ship from './Ship';
 import Bullet from './Bullet';
+import Enemy from './Enemy';
 
 import styles from './Game.module.css';
 
@@ -19,6 +20,7 @@ class Game extends Component {
     this.state = {
       tick: 0,
       bullets: {},
+      enemies: {},
     };
   }
 
@@ -57,6 +59,7 @@ class Game extends Component {
             rotation={rotation}
           />
         ))}
+        <Enemy rotation="45" tick={this.state.tick} />
       </div>
     );
   }
