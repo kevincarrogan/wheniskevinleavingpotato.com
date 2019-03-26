@@ -7,12 +7,17 @@ import Enemy from './Enemy';
 
 import styles from './Game.module.css';
 
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (+max - +min)) + +min;
+
 class Game extends Component {
   constructor(props) {
     super(props);
 
     this.fps = 60;
     this._interval = 1000 / this.fps;
+
+    this.enemySpawnRate = 120;
 
     this.fire = this.fire.bind(this);
     this.remove = this.remove.bind(this);
@@ -21,6 +26,7 @@ class Game extends Component {
       tick: 0,
       bullets: {},
       enemies: {},
+      enemySpawnTimer: 0,
     };
   }
 
@@ -31,11 +37,26 @@ class Game extends Component {
     this.setState((state, props) => ({
       tick: state.tick + tick,
     }));
+
+    if (this.state.enemySpawnTimer > this.enemySpawnRate) {
+      this.addEnemy(randomInt(0, 360));
+      this.setState({ enemySpawnTimer: 0 });
+    } else {
+      this.setState((state, props) => ({
+        enemySpawnTimer: state.enemySpawnTimer + tick,
+      }));
+    }
   }
 
   fire(rotation) {
     this.setState((state, props) => ({
       bullets: { ...this.state.bullets, [state.tick]: rotation },
+    }));
+  }
+
+  addEnemy(rotation) {
+    this.setState((state, props) => ({
+      enemies: { ...this.state.enemies, [state.tick]: rotation },
     }));
   }
 
@@ -59,7 +80,9 @@ class Game extends Component {
             rotation={rotation}
           />
         ))}
-        <Enemy rotation="45" tick={this.state.tick} />
+        {Object.entries(this.state.enemies).map(([id, rotation]) => (
+          <Enemy id={id} key={id} rotation={rotation} tick={this.state.tick} />
+        ))}
       </div>
     );
   }
