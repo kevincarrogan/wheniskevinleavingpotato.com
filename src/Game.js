@@ -206,28 +206,8 @@ class Game extends Component {
   }
 
   render() {
-    if (this.canvasRef.current) {
-      this.collisionSystem.update();
-
-      const canvas = this.canvasRef.current;
-      const context = canvas.getContext('2d');
-      context.clearRect(0, 0, canvas.width, canvas.height);
-
-      context.strokeStyle = '#FFFFFF';
-      context.beginPath();
-
-      this.collisionSystem.draw(context);
-
-      context.stroke();
-    }
     return (
       <>
-        <canvas
-          style={{ outline: `1px solid red` }}
-          width="600"
-          height="600"
-          ref={this.canvasRef}
-        />
         <div className={styles.game}>
           {!this.state.gameOver && (
             <>
