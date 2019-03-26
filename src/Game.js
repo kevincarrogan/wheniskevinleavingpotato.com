@@ -23,7 +23,6 @@ class Game extends Component {
     this.enemySpawnRate = 120;
 
     this.fire = this.fire.bind(this);
-    this.remove = this.remove.bind(this);
     this.initBullet = this.initBullet.bind(this);
     this.updateBullets = this.updateBullets.bind(this);
 
@@ -111,13 +110,6 @@ class Game extends Component {
     this.setState((state, props) => ({
       enemies: { ...this.state.enemies, [state.tick]: rotation },
     }));
-  }
-
-  remove(id) {
-    this.setState((state, props) => {
-      const { [id]: value, ...bullets } = state.bullets;
-      return { bullets };
-    });
   }
 
   render() {
