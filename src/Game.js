@@ -14,10 +14,11 @@ class Game extends Component {
     this._interval = 1000 / this.fps;
 
     this.fire = this.fire.bind(this);
+    this.remove = this.remove.bind(this);
 
     this.state = {
       tick: 0,
-      bullets: [],
+      bullets: {},
     };
   }
 
@@ -32,19 +33,30 @@ class Game extends Component {
 
   fire(rotation) {
     this.setState((state, props) => ({
-      bullets: [...this.state.bullets, rotation],
+      bullets: { ...this.state.bullets, [state.tick]: rotation },
     }));
+  }
+
+  remove(id) {
+    this.setState((state, props) => {
+      const { [id]: value, ...bullets } = state.bullets;
+      return { bullets };
+    });
   }
 
   render() {
     return (
       <div className={styles.game}>
         <Ship tick={this.state.tick} fire={this.fire} />
-        <ul>
-          {this.state.bullets.map((rotation, i) => (
-            <Bullet key={i} tick={this.state.tick} rotation={rotation} />
-          ))}
-        </ul>
+        {Object.entries(this.state.bullets).map(([id, rotation]) => (
+          <Bullet
+            id={id}
+            key={id}
+            remove={this.remove}
+            tick={this.state.tick}
+            rotation={rotation}
+          />
+        ))}
       </div>
     );
   }
