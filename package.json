@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "detect-collisions": "^2.4.3",
+    "detect-collisions": "^2.7.0",
     "luxon": "^1.11.4",
     "react": "^16.8.4",
     "react-animation-frame": "^1.0.2",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8",
+    "react-scripts": "5.0.1",
     "react-youtube": "^7.9.0",
     "uuid": "^3.3.2"
   },
